@@ -116,6 +116,13 @@ details p{color:var(--muted);margin:8px 0 0!important}
 .panel h2{font:700 22px/1.2 "Lora",Georgia,system-ui,sans-serif;margin:0 0 6px}
 .panel .sub{color:var(--muted);margin:0 0 20px;font-size:15px}
 .hidden{display:none!important}
+.proof{border:1.5px dashed var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+.proof.ok{border-style:solid;border-color:var(--ok)}
+.proof h3{margin:0 0 4px;font:600 15px/1.3 "Poppins",system-ui,sans-serif}
+.proof .note{margin:0 0 10px}
+.proof input[type=file]{width:100%;font:inherit;font-size:14px;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:10px;padding:10px}
+.proof img{display:block;max-width:100%;max-height:220px;margin:12px auto 0;border-radius:8px;border:1px solid var(--line);background:#fff}
+.proof .okmsg{color:var(--ok);font-weight:600;font-size:14px;margin-top:8px}
 
 label{display:block;font-weight:600;font-size:14px;margin:0 0 6px}
 .field{margin-bottom:16px}
@@ -252,6 +259,7 @@ input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px
       <li>Isi data diri pada formulir di bawah.</li>
       <li>Simpan invoice yang muncul.</li>
       <li>Bayar lewat QRIS atau transfer BCA.</li>
+      <li>Lampirkan bukti transfer dan foto invoice di halaman ini. Wajib, tanpa keduanya kamu belum bisa lanjut.</li>
       <li>Kirim invoice ke DM Instagram @bunayyahya, lalu e-book dikirim ke kamu.</li>
     </ol>
   </section>
@@ -272,7 +280,7 @@ input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px
   </section>
 
   <ol class="steps" aria-label="Langkah pemesanan">
-    <li class="on"></li><li></li><li></li><li></li>
+    <li class="on"></li><li></li><li></li><li></li><li></li>
   </ol>
 
   <!-- 1. Data pembeli -->
@@ -352,11 +360,40 @@ input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px
       <div id="bankList"></div>
     </div>
     <label class="check"><input type="checkbox" id="paidCheck"> <span>Saya sudah membayar sesuai nominal di atas.</span></label>
-    <button class="btn" id="toDm" disabled>Saya sudah bayar</button>
+    <button class="btn" id="toDm" disabled>Saya sudah bayar, lanjut lampirkan bukti</button>
   </section>
 
-  <!-- 4. Kirim ke DM -->
+  <!-- 4. Lampirkan bukti -->
   <section class="panel hidden" id="s4">
+    <h2>Lampirkan bukti</h2>
+    <p class="sub">Wajib. Lampirkan bukti transfer dan foto invoice sebelum lanjut ke DM Instagram.</p>
+    <div class="proof" id="proofBox1">
+      <h3>1. Bukti transfer</h3>
+      <p class="note">Screenshot atau foto bukti pembayaran dari m-banking / e-wallet. Nominal dan tanggal harus terlihat jelas.</p>
+      <input type="file" id="fProof" accept="image/*">
+      <img id="proofImg" alt="Pratinjau bukti transfer" class="hidden">
+      <div class="okmsg hidden" id="proofOk">Bukti transfer terlampir</div>
+      <div class="err" id="eProof"></div>
+    </div>
+    <div class="proof" id="proofBox2">
+      <h3>2. Foto invoice</h3>
+      <p class="note">Gambar invoice yang tadi kamu simpan (nomor invoice harus terlihat jelas).</p>
+      <input type="file" id="fInv" accept="image/*">
+      <img id="invPrev" alt="Pratinjau foto invoice" class="hidden">
+      <div class="okmsg hidden" id="invOk">Foto invoice terlampir</div>
+      <div class="err" id="eInv"></div>
+    </div>
+    <p class="note" id="proofNeed">Lampirkan kedua gambar di atas untuk membuka langkah berikutnya.</p>
+    <p class="note">File hanya dicek di perangkatmu dan tidak diunggah ke mana pun. Nanti kamu kirim lagi kedua gambar ini langsung di DM. Kalau halaman dimuat ulang, lampirkan ulang.</p>
+    <div class="btn-row">
+      <button class="btn" id="toDm2" disabled>Lanjut ke DM Instagram</button>
+      <button class="btn ghost" id="saveInv3">Simpan invoice (gambar)</button>
+      <button class="btn ghost" id="backPay">Kembali ke pembayaran</button>
+    </div>
+  </section>
+
+  <!-- 5. Kirim ke DM -->
+  <section class="panel hidden" id="s5">
     <div class="callout">
       <p class="callout-big">Kirim invoice ke DM Instagram untuk menerima e-book</p>
       <p class="callout-ig">@bunayyahya</p>
@@ -431,7 +468,7 @@ function load(){try{const v=localStorage.getItem(KEY);return v?JSON.parse(v):nul
 function clearSaved(){try{localStorage.removeItem(KEY);}catch(e){}}
 
 function go(step,noScroll){
-  ["s1","s2","s3","s4"].forEach((s,i)=>$(s).classList.toggle("hidden",i!==step-1));
+  ["s1","s2","s3","s4","s5"].forEach((s,i)=>$(s).classList.toggle("hidden",i!==step-1));
   document.querySelectorAll(".steps li").forEach((li,i)=>li.classList.toggle("on",i<step));
   if(order){order.step=step;save();}
   if(!noScroll)$("pesan").scrollIntoView({block:"start"});
@@ -509,7 +546,7 @@ function invoiceText(){
     ``,
     `Total: ${rupiah(o.total)}`,
     `Status: sudah bayar, mohon dikonfirmasi dan dikirim e-book-nya 🙏`,
-    `(Bukti transfer saya lampirkan)`
+    `(Bukti transfer dan foto invoice saya lampirkan)`
   ].join("\n");
 }
 
@@ -593,7 +630,47 @@ document.addEventListener("click",e=>{
   if(e.target.closest("[data-copy-amount]")&&order)copy(String(order.total),"Nominal tersalin");
 });
 $("paidCheck").addEventListener("change",e=>{$("toDm").disabled=!e.target.checked;});
-$("toDm").addEventListener("click",()=>{order.paidClaimAt=new Date().toISOString();go(4);setupDm();});
+$("toDm").addEventListener("click",()=>{order.paidClaimAt=new Date().toISOString();go(4);});
+
+/* ---------- Langkah 4: lampirkan bukti (wajib) ---------- */
+const MAX_BYTES=10*1024*1024;
+const proof={transfer:null,invoice:null,urls:{}};
+function fileSig(f){return f?[f.name,f.size,f.lastModified].join("|"):"";}
+function checkProofFile(f){
+  if(!f)return "Pilih gambar dulu.";
+  if(!/^image\//.test(f.type))return "File harus berupa gambar (JPG, PNG, atau sejenisnya).";
+  if(f.size===0)return "File kosong. Pilih gambar lain.";
+  if(f.size>MAX_BYTES)return "Ukuran gambar maksimal 10 MB.";
+  return "";
+}
+function refreshProof(){
+  const ready=!!(proof.transfer&&proof.invoice);
+  $("toDm2").disabled=!ready;
+  $("proofNeed").classList.toggle("hidden",ready);
+}
+function bindProof(key,inputId,imgId,okId,errId,boxId,otherKey){
+  $(inputId).addEventListener("change",e=>{
+    const f=e.target.files&&e.target.files[0];
+    const img=$(imgId),ok=$(okId),box=$(boxId);
+    if(proof.urls[key]){URL.revokeObjectURL(proof.urls[key]);proof.urls[key]=null;}
+    proof[key]=null;img.classList.add("hidden");img.removeAttribute("src");ok.classList.add("hidden");box.classList.remove("ok");
+    let msg=checkProofFile(f);
+    if(!msg&&f&&proof[otherKey]&&fileSig(f)===fileSig(proof[otherKey]))msg="Bukti transfer dan foto invoice tidak boleh file yang sama.";
+    $(errId).textContent=msg;
+    if(msg){e.target.value="";refreshProof();return;}
+    proof[key]=f;proof.urls[key]=URL.createObjectURL(f);
+    img.src=proof.urls[key];img.classList.remove("hidden");ok.classList.remove("hidden");box.classList.add("ok");
+    refreshProof();
+  });
+}
+bindProof("transfer","fProof","proofImg","proofOk","eProof","proofBox1","invoice");
+bindProof("invoice","fInv","invPrev","invOk","eInv","proofBox2","transfer");
+$("toDm2").addEventListener("click",()=>{
+  if(!(proof.transfer&&proof.invoice)){refreshProof();toast("Lampirkan bukti transfer dan foto invoice dulu");return;}
+  order.proofAt=new Date().toISOString();go(5);setupDm();
+});
+$("saveInv3").addEventListener("click",saveInvoice);
+$("backPay").addEventListener("click",()=>go(3));
 
 /* ---------- Langkah 4: DM & email ---------- */
 function setupDm(){
@@ -604,7 +681,7 @@ $("dmBtn").addEventListener("click",()=>{copy(invoiceText(),"Invoice tersalin, t
 
 /* ---------- Pulihkan pesanan terakhir ---------- */
 order=load();
-if(order&&order.no){renderReceipt();if(order.step>=4)setupDm();go(Math.min(Math.max(order.step||2,2),4));}
+if(order&&order.no){renderReceipt();go(Math.min(Math.max(order.step||2,2),4));refreshProof();}
 else{order=null;go(1,true);}
 </script>
 </body>
