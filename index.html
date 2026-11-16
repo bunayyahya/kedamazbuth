@@ -246,6 +246,10 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
 .buybar.po{background:linear-gradient(90deg,#B3261E,#D9481C)!important;color:#fff}
 .buybar.po strong{color:#fff}
 .buybar.po .btn{background:#FFE08A;color:#7A1A12}
+.tnc{margin:0 0 14px;padding-left:22px}.tnc li{margin:0 0 10px}
+.terms-box{background:color-mix(in srgb,var(--warn) 10%,transparent);border:1.5px solid var(--warn);border-radius:12px;padding:14px 16px;margin:6px 0 14px;font-size:14.5px}
+.terms-box a,.check a,.tnc a{color:var(--accent)}
+.terms-box ul{margin:8px 0 8px;padding-left:20px}.terms-box li{margin:0 0 5px}.terms-box a{font-weight:600}
 </style>
 </head>
 <body>
@@ -469,6 +473,18 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
     <p class="ship-thanks">Terima kasih atas kesabaran dan kepercayaanmu!</p>
   </section>
 
+  <section class="sec" id="syarat">
+    <h2>Syarat dan ketentuan pembelian</h2>
+    <p>Dengan membeli produk di sini, kamu menyetujui ketentuan berikut.</p>
+    <ol class="tnc">
+      <li><b>Produk yang sudah diterima tidak dapat direfund.</b> Produk ini berupa file digital yang tidak dapat ditarik kembali setelah dikirim, jadi dana tidak dapat dikembalikan setelah produk diterima.</li>
+      <li><b>PDF tidak dapat diunduh ke ponsel.</b> Hal ini dilakukan demi mencegah penyebaran produk tanpa izin.</li>
+      <li><b>Produk hanya untuk penggunaan pribadi.</b> Setiap file diberi watermark identitas pembeli, dan tidak boleh disebarluaskan tanpa izin.</li>
+      <li><b>Pengiriman maksimal 1×24 jam</b> setelah pembayaran terkonfirmasi. Jika terlambat, berlaku cashback sesuai informasi pengiriman di atas.</li>
+      <li>Mencentang kotak persetujuan pada formulir pemesanan berarti kamu sudah membaca dan menyetujui seluruh syarat dan ketentuan ini.</li>
+    </ol>
+  </section>
+
   <section class="sec">
     <h2>Cara pesan</h2>
     <ol class="how">
@@ -485,6 +501,8 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
     <details><summary>Bayarnya pakai apa?</summary><p>QRIS (GoPay, OVO, DANA, ShopeePay, dan m-banking apa pun) atau transfer ke rekening BCA.</p></details>
     <details><summary>Apa isi paket bundling?</summary><p>Dua e-book sekaligus: <i>da ismu eh yastha?</i> dan <i>‘ala gambi yastha!</i>, dengan total Rp250.000 (lebih hemat Rp50.000 dibanding membeli satu per satu). Selama promo pre order, paket ini juga mendapat potongan Rp50.000.</p></details>
     <details><summary>Promo pre order berlaku sampai kapan?</summary><p>Selama 1 minggu, sampai <span data-end>23 November 2026</span>, dan hanya untuk <span data-kuota>30</span> pembeli pertama. Semua pilihan mendapat potongan Rp50.000: satu buku dari Rp150.000 menjadi Rp100.000, paket 2 buku dari Rp250.000 menjadi Rp200.000. Kalau slot sudah penuh, harga kembali normal walaupun minggunya belum lewat.</p></details>
+    <details><summary>Apakah produk yang sudah dibeli bisa direfund?</summary><p>Tidak. Produk digital yang sudah diterima tidak dapat direfund. Baca selengkapnya di <a href="#syarat">Syarat dan ketentuan pembelian</a>.</p></details>
+    <details><summary>Kenapa PDF tidak bisa diunduh ke ponsel?</summary><p>Demi mencegah penyebaran produk tanpa izin.</p></details>
     <details><summary>Kapan e-book dikirim?</summary><p>Maksimal 1×24 jam setelah pembayaranmu terkonfirmasi, lewat WhatsApp, Instagram, atau email yang kamu cantumkan. Produk tidak dikirim instan karena setiap file diberi watermark identitas pembeli secara manual. Jika terlambat, kamu mendapat cashback Rp15.000 untuk setiap 24 jam keterlambatan. Klaim cashback dengan mengirim DM ke @bunayyahya beserta invoice pembelianmu. Lihat <a href="#pengiriman">Informasi pengiriman produk</a>.</p></details>
     <details><summary>Saya belum pernah belajar ‘Amiyah, bisa pakai buku ini?</summary><p>Bisa. Bagian awal kedua buku menjelaskan cara membaca tabel, transliterasi, pelafalan, dan pola-polanya.</p></details>
     <details><summary>Kenapa ada watermark nama saya?</summary><p>Supaya e-book menjadi salinan pribadimu dan tidak disebarluaskan tanpa izin.</p></details>
@@ -546,6 +564,17 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
       </fieldset>
       <label class="check"><input type="checkbox" id="fAgree"> <span>Data yang saya isi benar dan boleh dipakai sebagai watermark pada produk yang saya beli.</span></label>
       <div class="err" id="eAgree" style="margin-top:-14px;margin-bottom:12px"></div>
+      <div class="terms-box">
+        <b>Sebelum membuat invoice, baca dulu:</b>
+        <ul>
+          <li>Produk yang sudah diterima <b>tidak dapat direfund</b>.</li>
+          <li><b>PDF tidak dapat diunduh ke ponsel</b> demi mencegah penyebaran produk tanpa izin.</li>
+          <li>Produk hanya untuk penggunaan pribadi dan diberi watermark identitasmu.</li>
+        </ul>
+        <a href="#syarat">Baca syarat dan ketentuan selengkapnya</a>
+      </div>
+      <label class="check"><input type="checkbox" id="fTerms"> <span>Saya sudah membaca dan menyetujui <a href="#syarat">Syarat dan Ketentuan Pembelian</a>, termasuk bahwa produk yang sudah diterima tidak dapat direfund dan PDF tidak dapat diunduh ke ponsel.</span></label>
+      <div class="err" id="eTerms" style="margin-top:-14px;margin-bottom:12px"></div>
       <button class="btn" type="submit">Buat invoice</button>
     </form>
   </section>
@@ -777,12 +806,13 @@ $("orderForm").addEventListener("submit", e => {
   set("eSrc", !srcSel ? "Pilih salah satu jawaban." : (srcSel.value==="lain" && srcOther.length<2 ? "Tulis dari mana atau dari siapa kamu tahu." : ""));
   const sumber = srcSel ? (srcSel.value==="lain" ? "Lainnya: "+srcOther : "affar.lame") : "";
   set("eAgree", $("fAgree").checked ? "" : "Centang persetujuan dulu.");
+  set("eTerms", $("fTerms").checked ? "" : "Kamu harus menyetujui syarat dan ketentuan pembelian untuk melanjutkan.");
   if(!ok) return;
   const p = prodById(sel.value);
   const unik = TOKO.kodeUnik ? Math.floor(Math.random()*299)+1 : 0;
   const potongan = promoOn() ? TOKO.promo.potongan : 0;
   order = { no:makeInvoiceNo(), date:new Date().toISOString(), prod:p.id, produk:p.nama, produkSingkat:p.singkat,
-            name, fam, ig, email, wa, sumber, hargaNormal:p.harga, potongan, harga:p.harga-potongan, unik, total:p.harga-potongan+unik, step:2 };
+            name, fam, ig, email, wa, sumber, syarat:true, hargaNormal:p.harga, potongan, harga:p.harga-potongan, unik, total:p.harga-potongan+unik, step:2 };
   save(); renderReceipt(); go(2);
 });
 
@@ -805,6 +835,7 @@ function renderReceipt(){
     <div class="row"><span>Email</span><b>${esc(o.email)}</b></div>
     <div class="row"><span>WhatsApp</span><b>${esc(o.wa||"-")}</b></div>
     <div class="row"><span>Tahu dari</span><b>${esc(o.sumber||"-")}</b></div>
+    <div class="row"><span>Syarat &amp; ketentuan</span><b>Disetujui</b></div>
     <hr>
     <div class="row"><span>${esc(o.produk)}</span><b>${rupiah(o.hargaNormal||o.harga)}</b></div>
     ${o.potongan?`<div class="row"><span>Potongan promo pre order</span><b>−${rupiah(o.potongan)}</b></div>`:""}
@@ -830,6 +861,7 @@ function invoiceText(){
     `Email: ${o.email}`,
     `WhatsApp: ${o.wa||"-"}`,
     `Tahu dari: ${o.sumber||"-"}`,
+    `Syarat & ketentuan pembelian: disetujui (produk diterima tidak dapat direfund, PDF tidak dapat diunduh ke ponsel)`,
     ``,
     ...(o.potongan?[`Harga normal: ${rupiah(o.hargaNormal)}`,`Potongan promo pre order: −${rupiah(o.potongan)}`]:[]),
     `Total: ${rupiah(o.total)}`,
@@ -982,7 +1014,7 @@ $("sendProof").addEventListener("click", async()=>{
   $("sendErr").classList.add("hidden"); $("sendingNote").classList.remove("hidden");
   const payload={
     action:"order", website:$("fWebsite").value,
-    data:{ nama:order.name, kekeluargaan:order.fam, instagram:order.ig, email:order.email, whatsapp:order.wa, sumber:order.sumber||"",
+    data:{ nama:order.name, kekeluargaan:order.fam, instagram:order.ig, email:order.email, whatsapp:order.wa, sumber:order.sumber||"", syarat:"disetujui",
            invoice:order.no, produk:order.produkSingkat||order.produk, nominal:order.total },
     buktiTransfer:{ name:"bukti-transfer.jpg", type:"image/jpeg", data:proof.transfer },
     fotoInvoice:{ name:"invoice.jpg", type:"image/jpeg", data:proof.invoice }
@@ -1013,7 +1045,7 @@ function setupDm(){
 function resetAll(msg){
   clearSaved(); order=null;
   $("orderForm").reset(); showProduct(null); $("fSrcOther").classList.add("hidden");
-  ["eProd","eName","eFam","eIg","eEmail","eWa","eSrc","eAgree"].forEach(id=>$(id).textContent="");
+  ["eProd","eName","eFam","eIg","eEmail","eWa","eSrc","eAgree","eTerms"].forEach(id=>$(id).textContent="");
   $("paidCheck").checked=false; $("toDm").disabled=true;
   $("imgFallback").classList.add("hidden"); $("receipt").innerHTML="";
   clearProof();
