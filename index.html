@@ -474,6 +474,13 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
         <input type="tel" id="fWa" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx" required>
         <div class="err" id="eWa"></div>
       </div>
+      <fieldset class="pick" id="srcBox">
+        <legend>Dari mana kamu tahu Kedamazbuth Bookstore?</legend>
+        <label class="opt"><input type="radio" name="src" value="affar.lame"><span class="t"><b>Dari affar.lame</b></span></label>
+        <label class="opt"><input type="radio" name="src" value="lain"><span class="t"><b>Yang lain</b><small>Tulis dari mana atau dari siapa kamu tahu</small></span></label>
+        <input type="text" id="fSrcOther" class="hidden" placeholder="Contoh: Instagram @..., teman bernama ..., grup WhatsApp ..." style="margin-top:4px">
+        <div class="err" id="eSrc"></div>
+      </fieldset>
       <label class="check"><input type="checkbox" id="fAgree"> <span>Data yang saya isi benar dan boleh dipakai sebagai watermark pada produk yang saya beli.</span></label>
       <div class="err" id="eAgree" style="margin-top:-14px;margin-bottom:12px"></div>
       <button class="btn" type="submit">Buat invoice</button>
@@ -637,7 +644,10 @@ function pickProduct(id){
   const r = document.querySelector(`input[name="prod"][value="${id}"]`);
   if(r){ r.checked = true; showProduct(id); $("eProd").textContent=""; }
 }
-document.addEventListener("change", e => { if(e.target.name==="prod") { showProduct(e.target.value); $("eProd").textContent=""; } });
+document.addEventListener("change", e => {
+  if(e.target.name==="prod") { showProduct(e.target.value); $("eProd").textContent=""; }
+  if(e.target.name==="src") { const o=e.target.value==="lain"; $("fSrcOther").classList.toggle("hidden",!o); if(o) $("fSrcOther").focus(); $("eSrc").textContent=""; }
+});
 
 document.addEventListener("click", e => {
   const pk = e.target.closest("[data-pick]");
@@ -689,12 +699,16 @@ $("orderForm").addEventListener("submit", e => {
   set("eIg", /^[A-Za-z0-9._]{1,30}$/.test(ig) ? "" : "Username hanya boleh huruf, angka, titik, dan garis bawah.");
   set("eEmail", /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? "" : "Format email belum benar.");
   set("eWa", /^08\d{7,12}$/.test(wa) ? "" : "Tulis nomor WhatsApp yang aktif, contoh 081234567890.");
+  const srcSel=document.querySelector('input[name="src"]:checked');
+  const srcOther=$("fSrcOther").value.trim();
+  set("eSrc", !srcSel ? "Pilih salah satu jawaban." : (srcSel.value==="lain" && srcOther.length<2 ? "Tulis dari mana atau dari siapa kamu tahu." : ""));
+  const sumber = srcSel ? (srcSel.value==="lain" ? "Lainnya: "+srcOther : "affar.lame") : "";
   set("eAgree", $("fAgree").checked ? "" : "Centang persetujuan dulu.");
   if(!ok) return;
   const p = prodById(sel.value);
   const unik = TOKO.kodeUnik ? Math.floor(Math.random()*299)+1 : 0;
   order = { no:makeInvoiceNo(), date:new Date().toISOString(), prod:p.id, produk:p.nama, produkSingkat:p.singkat,
-            name, fam, ig, email, wa, harga:p.harga, unik, total:p.harga+unik, step:2 };
+            name, fam, ig, email, wa, sumber, harga:p.harga, unik, total:p.harga+unik, step:2 };
   save(); renderReceipt(); go(2);
 });
 
@@ -716,6 +730,7 @@ function renderReceipt(){
     <div class="row"><span>Instagram</span><b>@${esc(o.ig)}</b></div>
     <div class="row"><span>Email</span><b>${esc(o.email)}</b></div>
     <div class="row"><span>WhatsApp</span><b>${esc(o.wa||"-")}</b></div>
+    <div class="row"><span>Tahu dari</span><b>${esc(o.sumber||"-")}</b></div>
     <hr>
     <div class="row"><span>${esc(o.produk)}</span><b>${rupiah(o.harga)}</b></div>
     ${o.unik?`<div class="row"><span>Kode unik</span><b>${rupiah(o.unik)}</b></div>`:""}
@@ -739,6 +754,7 @@ function invoiceText(){
     `Instagram: @${o.ig}`,
     `Email: ${o.email}`,
     `WhatsApp: ${o.wa||"-"}`,
+    `Tahu dari: ${o.sumber||"-"}`,
     ``,
     `Total: ${rupiah(o.total)}`,
     `Status: sudah bayar, mohon dikonfirmasi dan dikirim e-book-nya 🙏`,
@@ -752,7 +768,7 @@ function drawInvoicePng(){
   const rows=[
     ["center-b",TOKO.namaToko],["center","INVOICE PEMBELIAN"],["dash"],
     ["row","No.",o.no],["row","Tanggal",fmtDate(o.date)],["dash"],
-    ["row","Nama",o.name],["row","Kekeluargaan",o.fam],["row","Instagram","@"+o.ig],["row","Email",o.email],["row","WhatsApp",o.wa||"-"],["dash"],
+    ["row","Nama",o.name],["row","Kekeluargaan",o.fam],["row","Instagram","@"+o.ig],["row","Email",o.email],["row","WhatsApp",o.wa||"-"],["row","Tahu dari",o.sumber||"-"],["dash"],
     ["row",o.produkSingkat||o.produk,rupiah(o.harga)],
     ...(o.unik?[["row","Kode unik",rupiah(o.unik)]]:[]),
     ["dash"],["total","TOTAL",rupiah(o.total)],["stamp","MENUNGGU KONFIRMASI"],["dash"],
@@ -889,7 +905,7 @@ $("sendProof").addEventListener("click", async()=>{
   $("sendErr").classList.add("hidden"); $("sendingNote").classList.remove("hidden");
   const payload={
     action:"order", website:$("fWebsite").value,
-    data:{ nama:order.name, kekeluargaan:order.fam, instagram:order.ig, email:order.email, whatsapp:order.wa,
+    data:{ nama:order.name, kekeluargaan:order.fam, instagram:order.ig, email:order.email, whatsapp:order.wa, sumber:order.sumber||"",
            invoice:order.no, produk:order.produkSingkat||order.produk, nominal:order.total },
     buktiTransfer:{ name:"bukti-transfer.jpg", type:"image/jpeg", data:proof.transfer },
     fotoInvoice:{ name:"invoice.jpg", type:"image/jpeg", data:proof.invoice }
@@ -919,8 +935,8 @@ function setupDm(){
 }
 function resetAll(msg){
   clearSaved(); order=null;
-  $("orderForm").reset(); showProduct(null);
-  ["eProd","eName","eFam","eIg","eEmail","eWa","eAgree"].forEach(id=>$(id).textContent="");
+  $("orderForm").reset(); showProduct(null); $("fSrcOther").classList.add("hidden");
+  ["eProd","eName","eFam","eIg","eEmail","eWa","eSrc","eAgree"].forEach(id=>$(id).textContent="");
   $("paidCheck").checked=false; $("toDm").disabled=true;
   $("imgFallback").classList.add("hidden"); $("receipt").innerHTML="";
   clearProof();
