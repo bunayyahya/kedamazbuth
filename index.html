@@ -230,6 +230,9 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
 .parts li{padding:12px 0;border-bottom:1px solid var(--line)}
 .parts li b{display:block}
 .parts li span{color:var(--muted);font-size:15px}
+.upsell{margin:12px 0 0;font-size:14px;color:var(--muted)}
+.upsell a{color:var(--accent);text-decoration:none}.upsell b{color:var(--ink)}
+.opt.best:not(:has(input:checked)){border-color:var(--gold)}
 </style>
 </head>
 <body>
@@ -270,7 +273,7 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
       <div>
         <p class="bundle-kicker">Paket bundling</p>
         <p class="bundle-title">Dapat tiga-tiganya cukup <b data-now="b123"></b></p>
-        <p class="bundle-note">Hemat <b data-save="b123"></b> dibanding beli satu per satu. Paket dua buku mulai <b data-now="b12"></b>.</p>
+        <p class="bundle-note">Hemat <b data-save="b123"></b> dibanding beli satu per satu, rata-rata <b data-avg="b123"></b> per buku. Paket dua buku mulai <b data-now="b12"></b>.</p>
       </div>
       <a class="btn" href="#pesan" data-pick="b123">Pesan paket 3 buku</a>
     </div>
@@ -306,6 +309,7 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
       <div class="price-tag" data-tag="agy">Rp150.000</div>
       <a class="btn" href="#pesan" data-pick="agy">Pesan buku ini</a>
     </div>
+    <p class="upsell" data-upsell="agy"></p>
 
     <div class="sub-sec">
       <h3>Belajar ejaan dan pelafalan sekaligus</h3>
@@ -364,6 +368,7 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
       <div class="price-tag" data-tag="dismu">Rp150.000</div>
       <a class="btn" href="#pesan" data-pick="dismu">Pesan buku ini</a>
     </div>
+    <p class="upsell" data-upsell="dismu"></p>
 
     <div class="sub-sec">
       <h3>Intip isinya</h3>
@@ -428,6 +433,7 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
       <div class="price-tag" data-tag="kaidah">Rp150.000</div>
       <a class="btn" href="#pesan" data-pick="kaidah">Pesan buku ini</a>
     </div>
+    <p class="upsell" data-upsell="kaidah"></p>
 
     <div class="sub-sec">
       <h3>Dari bunyi sampai kalimat majemuk</h3>
@@ -484,7 +490,7 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
       <div>
         <p class="bundle-kicker">Paling hemat</p>
         <p class="bundle-title">Buku 1 + Buku 2 + Buku 3</p>
-        <p class="bundle-note"><s data-normal="b123"></s> menjadi <b data-now="b123"></b>, hemat <b data-save="b123"></b>. Kata kerja, kosakata, dan kaidahnya sekaligus.</p>
+        <p class="bundle-note"><s data-normal="b123"></s> menjadi <b data-now="b123"></b>, hemat <b data-save="b123"></b>. Sama saja dengan beli Buku 2 + Buku 3, dapat Buku 1 gratis. Rata-rata <b data-avg="b123"></b> per buku.</p>
       </div>
       <a class="btn" href="#pesan" data-pick="b123">Pesan 3 buku <span data-now="b123"></span></a>
     </div>
@@ -494,13 +500,6 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
         <p class="bundle-note">Kata kerja dan kosakata. <s data-normal="b12"></s> menjadi <b data-now="b12"></b>.</p>
       </div>
       <a class="btn" href="#pesan" data-pick="b12">Pesan paket <span data-now="b12"></span></a>
-    </div>
-    <div class="bundle-card big">
-      <div>
-        <p class="bundle-title">Buku 2 + Buku 3</p>
-        <p class="bundle-note">Kosakata dan kaidahnya. <s data-normal="b23"></s> menjadi <b data-now="b23"></b>.</p>
-      </div>
-      <a class="btn" href="#pesan" data-pick="b23">Pesan paket <span data-now="b23"></span></a>
     </div>
     <div class="bundle-card big">
       <div>
@@ -571,7 +570,7 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
   <section class="sec">
     <h2>Pertanyaan yang sering muncul</h2>
     <details><summary>Bayarnya pakai apa?</summary><p>QRIS (GoPay, OVO, DANA, ShopeePay, dan m-banking apa pun) atau transfer ke rekening BCA.</p></details>
-    <details><summary>Apa saja pilihan paket bundling?</summary><p>Ada empat paket. Buku 1 + 2, Buku 2 + 3, dan Buku 1 + 3 masing-masing Rp250.000 (hemat Rp50.000 dibanding membeli satuan), serta paket tiga buku Rp350.000 (hemat Rp100.000). Harga satuan tiap buku Rp150.000.</p></details>
+    <details><summary>Apa saja pilihan paket bundling?</summary><p>Ada tiga paket. Buku 1 + 2 Rp200.000 (hemat Rp50.000), Buku 1 + 3 Rp200.000 (hemat Rp50.000), dan paket tiga buku Rp300.000 (hemat Rp100.000). Paket tiga buku sama dengan membeli Buku 2 dan Buku 3 lalu mendapat Buku 1 gratis. Harga satuan: Buku 1 Rp100.000, Buku 2 Rp150.000, Buku 3 Rp150.000.</p></details>
     <details><summary>Buku 1 dan 2 itu yang mana? Perlu punya keduanya untuk memakai Buku 3?</summary><p>Buku 1 adalah <i>‘ala gambi yastha!</i> (500 kata kerja), Buku 2 adalah <i>da ismu eh yastha?</i> (kamus tematik), dan Buku 3 adalah <i>zay keda yastha!</i> (kaidah bahasa). Tidak wajib punya semuanya. Bagi yang memiliki ketiganya, Buku 3 punya lampiran rujukan silang ke Buku 1 dan 2.</p></details>
     <details><summary>Apakah produk yang sudah dibeli bisa direfund?</summary><p>Tidak. Produk digital yang sudah diterima tidak dapat direfund. Baca selengkapnya di <a href="#syarat">Syarat dan ketentuan pembelian</a>.</p></details>
     <details><summary>Kenapa PDF tidak bisa diunduh ke ponsel?</summary><p>Demi mencegah penyebaran produk tanpa izin.</p></details>
@@ -584,7 +583,7 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
   <section class="order-head" id="pesan">
     <h2 class="order-prod" id="prodName">Pilih buku</h2>
     <p class="lede" id="prodDesc">Pilih salah satu buku atau paket bundling, lalu isi data di bawah.</p>
-    <div class="price-tag" id="prodPrice">Rp150.000</div>
+    <div class="price-tag" id="prodPrice">Mulai Rp100.000</div>
   </section>
 
   <ol class="steps" aria-label="Langkah pemesanan">
@@ -750,7 +749,7 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
   <p class="foot">Data dan bukti pembayaranmu disimpan secara privat dan hanya bisa dilihat oleh penjual.</p>
 </main>
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Halaman buku"><button type="button" id="lbClose" aria-label="Tutup">×</button><img id="lbImg" alt=""></div>
-<div class="buybar" id="buybar"><strong id="buyTxt">3 buku · mulai Rp150.000</strong><a class="btn" href="#pesan">Pesan e-book</a></div>
+<div class="buybar" id="buybar"><strong id="buyTxt">3 buku · mulai Rp100.000</strong><a class="btn" href="#pesan">Pesan e-book</a></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -758,20 +757,18 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
 const TOKO = {
   namaToko: "Kedamazbuth Bookstore",
   produkList: [
+    { id: "b123",   nama: "Paket Bundling Buku 1 + 2 + 3: ketiga e-Book Amiyah Mesir (beli Buku 2 + 3, gratis Buku 1)",
+      singkat: "Paket Buku 1 + 2 + 3", ket: "Beli Buku 2 + 3, gratis Buku 1", harga: 300000, isi: ["agy","dismu","kaidah"] },
+    { id: "b12",    nama: "Paket Bundling Buku 1 + 2: e-Book ‘Ala Gambi Yastha! + e-Book da ismu eh yastha?",
+      singkat: "Paket Buku 1 + 2", ket: "Kata kerja + kamus tematik", harga: 200000, isi: ["agy","dismu"] },
+    { id: "b13",    nama: "Paket Bundling Buku 1 + 3: e-Book ‘Ala Gambi Yastha! + e-Book zay keda yastha!",
+      singkat: "Paket Buku 1 + 3", ket: "Kata kerja + kaidah", harga: 200000, isi: ["agy","kaidah"] },
     { id: "agy",    nama: "e-Book ‘Ala Gambi Yastha! Buku 500 Kata Kerja Amiyah Mesir",
-      singkat: "Buku 1: 500 Kata Kerja", ket: "Buku 1 · 500 kata kerja beserta semua bentuknya · 531 halaman", harga: 150000 },
+      singkat: "Buku 1: 500 Kata Kerja", ket: "Buku 1 · 500 kata kerja beserta semua bentuknya · 531 halaman", harga: 100000 },
     { id: "dismu",  nama: "e-Book da ismu eh yastha? Kamus Tematik Amiyah Mesir",
       singkat: "Buku 2: Kamus Tematik", ket: "Buku 2 · Kamus tematik · 8.000+ kata & ungkapan · 725 halaman", harga: 150000 },
     { id: "kaidah", nama: "e-Book zay keda yastha! Kaidah Bahasa Amiyah Mesir",
-      singkat: "Buku 3: Kaidah Amiyah", ket: "Buku 3 · 369 kaidah dalam 24 bab · 799 halaman", harga: 150000 },
-    { id: "b12",    nama: "Paket Bundling Buku 1 + 2: e-Book ‘Ala Gambi Yastha! + e-Book da ismu eh yastha?",
-      singkat: "Paket Buku 1 + 2", ket: "Kata kerja + kamus tematik", harga: 250000, isi: ["agy","dismu"] },
-    { id: "b23",    nama: "Paket Bundling Buku 2 + 3: e-Book da ismu eh yastha? + e-Book zay keda yastha!",
-      singkat: "Paket Buku 2 + 3", ket: "Kamus tematik + kaidah", harga: 250000, isi: ["dismu","kaidah"] },
-    { id: "b13",    nama: "Paket Bundling Buku 1 + 3: e-Book ‘Ala Gambi Yastha! + e-Book zay keda yastha!",
-      singkat: "Paket Buku 1 + 3", ket: "Kata kerja + kaidah", harga: 250000, isi: ["agy","kaidah"] },
-    { id: "b123",   nama: "Paket Bundling Buku 1 + 2 + 3: ketiga e-Book Amiyah Mesir",
-      singkat: "Paket Buku 1 + 2 + 3", ket: "Kata kerja + kamus tematik + kaidah", harga: 350000, isi: ["agy","dismu","kaidah"] }
+      singkat: "Buku 3: Kaidah Amiyah", ket: "Buku 3 · 369 kaidah dalam 24 bab · 799 halaman", harga: 150000 }
   ],
   deskripsi: "Isi data di bawah, bayar, unggah bukti transfer, lalu kirim invoice ke DM Instagram untuk menerima e-book. E-book dikirim dengan watermark atas namamu.",
   kodeUnik: true,               // tambah 1–299 rupiah agar transfer mudah dicocokkan
@@ -803,13 +800,13 @@ const ls = {
 
 /* ---------- Pilihan produk ---------- */
 $("prodOptions").innerHTML = TOKO.produkList.map(p => `
-  <label class="opt"><input type="radio" name="prod" value="${p.id}">
-    <span class="t"><b>${esc(p.isi ? p.singkat.replace(/^Paket /,"Paket bundling ") : p.nama.replace(/^e-Book /,""))}${p.isi?`<span class="save">Hemat ${rupiah(savePrice(p))}</span>`:""}</b><small>${esc(p.ket)}</small></span>
+  <label class="opt${p.id==="b123"?" best":""}"><input type="radio" name="prod" value="${p.id}">
+    <span class="t"><b>${esc(p.isi ? p.singkat.replace(/^Paket /,"Paket bundling ") : p.nama.replace(/^e-Book /,""))}${p.id==="b123"?`<span class="save">Paling hemat</span>`:""}${p.isi?`<span class="save">Hemat ${rupiah(savePrice(p))}</span>`:""}</b><small>${esc(p.ket)}${p.id==="b123"?` · rata-rata ${rupiah(p.harga/p.isi.length)} per buku`:""}</small></span>
     <em data-opt="${p.id}">${rupiah(p.harga)}</em></label>`).join("");
 
 function showProduct(id){
   const p = prodById(id);
-  if(!p){ $("prodName").textContent="Pilih buku"; $("prodDesc").textContent="Pilih salah satu buku atau paket bundling, lalu isi data di bawah."; $("prodPrice").textContent="Rp150.000"; return; }
+  if(!p){ $("prodName").textContent="Pilih buku"; $("prodDesc").textContent="Pilih salah satu buku atau paket bundling, lalu isi data di bawah."; $("prodPrice").textContent="Mulai Rp100.000"; return; }
   $("prodName").textContent = p.nama;
   $("prodDesc").textContent = TOKO.deskripsi;
   $("prodPrice").textContent = rupiah(p.harga);
@@ -1112,7 +1109,7 @@ function setupDm(){
 }
 function resetAll(msg){
   clearSaved(); order=null;
-  $("orderForm").reset(); showProduct(null); $("fSrcOther").classList.add("hidden");
+  $("orderForm").reset(); pickProduct("b123"); $("fSrcOther").classList.add("hidden");
   ["eProd","eName","eFam","eIg","eEmail","eWa","eSrc","eAgree","eTerms"].forEach(id=>$(id).textContent="");
   $("paidCheck").checked=false; $("toDm").disabled=true;
   $("imgFallback").classList.add("hidden"); $("receipt").innerHTML="";
@@ -1140,6 +1137,12 @@ function renderPrices(){
     document.querySelectorAll(`[data-tag="${p.id}"]`).forEach(e=>e.textContent=rupiah(p.harga));
     document.querySelectorAll(`[data-opt="${p.id}"]`).forEach(e=>e.innerHTML=p.isi?`<s>${rupiah(normalPrice(p))}</s>${rupiah(p.harga)}`:rupiah(p.harga));
   });
+  const full=prodById("b123");
+  document.querySelectorAll("[data-upsell]").forEach(e=>{
+    const p=prodById(e.dataset.upsell), worth=full.isi.filter(i=>i!==p.id).reduce((a,i)=>a+prodById(i).harga,0);
+    e.innerHTML=`Atau ambil <a href="#pesan" data-pick="b123"><b>paket 3 buku ${rupiah(full.harga)}</b></a>: tambah ${rupiah(full.harga-p.harga)}, dapat dua buku lagi yang harga satuannya ${rupiah(worth)}.`;
+  });
+  document.querySelectorAll("[data-avg]").forEach(e=>{ const p=prodById(e.dataset.avg); e.textContent=rupiah(p.harga/p.isi.length); });
   const min=Math.min(...TOKO.produkList.map(p=>p.harga));
   $("buyTxt").textContent=`3 buku · mulai ${rupiah(min)}`;
   const sel=document.querySelector('input[name="prod"]:checked'); if(sel && (!order||step()===1)) showProduct(sel.value);
@@ -1156,7 +1159,7 @@ if(order&&order.no&&!order.dmAt){
   go(st,true);
 } else {
   if(order&&order.dmAt) clearSaved();   // pesanan sebelumnya sudah selesai
-  order=null; go(1,true);
+  order=null; go(1,true); pickProduct("b123");
 }
 ls.del("order_invoice_v1");              // bersihkan data versi lama yang bikin macet
 
