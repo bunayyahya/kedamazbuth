@@ -272,8 +272,8 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
     <div class="bundle-card">
       <div>
         <p class="bundle-kicker">Paket bundling</p>
-        <p class="bundle-title">Dapat tiga-tiganya cukup <b data-now="b123"></b></p>
-        <p class="bundle-note">Hemat <b data-save="b123"></b> dibanding beli satu per satu, rata-rata <b data-avg="b123"></b> per buku. Paket dua buku mulai <b data-now="b12"></b>.</p>
+        <p class="bundle-title">Beli Buku 2 + Buku 3, <span style="color:var(--accent)">gratis Buku 1</span>!</p>
+        <p class="bundle-note">Ketiga buku cukup <b data-now="b123"></b> (normalnya <s data-normal="b123"></s>), rata-rata <b data-avg="b123"></b> per buku. Paket dua buku mulai <b data-now="b12"></b>.</p>
       </div>
       <a class="btn" href="#pesan" data-pick="b123">Pesan paket 3 buku</a>
     </div>
@@ -489,8 +489,8 @@ fieldset.pick legend{font-weight:600;font-size:14px;margin:0 0 8px;padding:0}
     <div class="bundle-card big best">
       <div>
         <p class="bundle-kicker">Paling hemat</p>
-        <p class="bundle-title">Buku 1 + Buku 2 + Buku 3</p>
-        <p class="bundle-note"><s data-normal="b123"></s> menjadi <b data-now="b123"></b>, hemat <b data-save="b123"></b>. Sama saja dengan beli Buku 2 + Buku 3, dapat Buku 1 gratis. Rata-rata <b data-avg="b123"></b> per buku.</p>
+        <p class="bundle-title">Beli Buku 2 + Buku 3, <span style="color:var(--accent)">gratis Buku 1</span>!</p>
+        <p class="bundle-note">Ketiga buku <s data-normal="b123"></s> menjadi <b data-now="b123"></b>, hemat <b data-save="b123"></b>. Rata-rata <b data-avg="b123"></b> per buku.</p>
       </div>
       <a class="btn" href="#pesan" data-pick="b123">Pesan 3 buku <span data-now="b123"></span></a>
     </div>
@@ -758,7 +758,7 @@ const TOKO = {
   namaToko: "Kedamazbuth Bookstore",
   produkList: [
     { id: "b123",   nama: "Paket Bundling Buku 1 + 2 + 3: ketiga e-Book Amiyah Mesir (beli Buku 2 + 3, gratis Buku 1)",
-      singkat: "Paket Buku 1 + 2 + 3", ket: "Beli Buku 2 + 3, gratis Buku 1", harga: 300000, isi: ["agy","dismu","kaidah"] },
+      singkat: "Paket Buku 1 + 2 + 3", ket: "Paket 3 buku: Buku 1 + 2 + 3", harga: 300000, isi: ["agy","dismu","kaidah"] },
     { id: "b12",    nama: "Paket Bundling Buku 1 + 2: e-Book ‘Ala Gambi Yastha! + e-Book da ismu eh yastha?",
       singkat: "Paket Buku 1 + 2", ket: "Kata kerja + kamus tematik", harga: 200000, isi: ["agy","dismu"] },
     { id: "b13",    nama: "Paket Bundling Buku 1 + 3: e-Book ‘Ala Gambi Yastha! + e-Book zay keda yastha!",
@@ -801,7 +801,7 @@ const ls = {
 /* ---------- Pilihan produk ---------- */
 $("prodOptions").innerHTML = TOKO.produkList.map(p => `
   <label class="opt${p.id==="b123"?" best":""}"><input type="radio" name="prod" value="${p.id}">
-    <span class="t"><b>${esc(p.isi ? p.singkat.replace(/^Paket /,"Paket bundling ") : p.nama.replace(/^e-Book /,""))}${p.id==="b123"?`<span class="save">Paling hemat</span>`:""}${p.isi?`<span class="save">Hemat ${rupiah(savePrice(p))}</span>`:""}</b><small>${esc(p.ket)}${p.id==="b123"?` · rata-rata ${rupiah(p.harga/p.isi.length)} per buku`:""}</small></span>
+    <span class="t"><b>${esc(p.id==="b123" ? "Beli Buku 2 + 3, gratis Buku 1" : p.isi ? p.singkat.replace(/^Paket /,"Paket bundling ") : p.nama.replace(/^e-Book /,""))}${p.id==="b123"?`<span class="save">Paling hemat</span>`:""}${p.isi?`<span class="save">Hemat ${rupiah(savePrice(p))}</span>`:""}</b><small>${esc(p.ket)}${p.id==="b123"?` · rata-rata ${rupiah(p.harga/p.isi.length)} per buku`:""}</small></span>
     <em data-opt="${p.id}">${rupiah(p.harga)}</em></label>`).join("");
 
 function showProduct(id){
@@ -1140,7 +1140,9 @@ function renderPrices(){
   const full=prodById("b123");
   document.querySelectorAll("[data-upsell]").forEach(e=>{
     const p=prodById(e.dataset.upsell), worth=full.isi.filter(i=>i!==p.id).reduce((a,i)=>a+prodById(i).harga,0);
-    e.innerHTML=`Atau ambil <a href="#pesan" data-pick="b123"><b>paket 3 buku ${rupiah(full.harga)}</b></a>: tambah ${rupiah(full.harga-p.harga)}, dapat dua buku lagi yang harga satuannya ${rupiah(worth)}.`;
+    e.innerHTML = p.id==="agy"
+      ? `Atau ambil <a href="#pesan" data-pick="b123"><b>paket 3 buku ${rupiah(full.harga)}</b></a>: tambah ${rupiah(full.harga-p.harga)}, dapat dua buku lagi yang harga satuannya ${rupiah(worth)}.`
+      : `Atau <a href="#pesan" data-pick="b123"><b>beli Buku 2 + Buku 3, gratis Buku 1</b></a>: paket 3 buku ${rupiah(full.harga)}, tambah ${rupiah(full.harga-p.harga)} saja.`;
   });
   document.querySelectorAll("[data-avg]").forEach(e=>{ const p=prodById(e.dataset.avg); e.textContent=rupiah(p.harga/p.isi.length); });
   const min=Math.min(...TOKO.produkList.map(p=>p.harga));
