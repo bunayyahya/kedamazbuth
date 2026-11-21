@@ -78,7 +78,9 @@ details p{color:var(--muted);margin:8px 0 0!important}
 
 
 /* ===== Hero buku 3D ===== */
-.hero{display:grid;gap:8px}
+.hero{display:grid;gap:8px;min-width:0}
+.hero>*{min-width:0;max-width:100%}
+.wrap{overflow-x:clip}
 .stage{display:grid;place-items:center;padding:18px 0 34px;perspective:1600px}
 .book{--w:min(230px,58vw);--t:30px;position:relative;width:var(--w);aspect-ratio:620/874;transform-style:preserve-3d;transform:rotateY(-28deg) rotateX(6deg);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .stage:hover .book{transform:rotateY(-14deg) rotateX(3deg)}
@@ -302,7 +304,7 @@ details.more[open]>summary{margin-bottom:8px}
     </div>
     <h1>Empat buku ‘Amiyah Mesir. Kata kerjanya, kosakatanya, kaidahnya, dan percakapannya.</h1>
     <p class="lede">Bahasa Arab di kelas tidak sama dengan yang terdengar di pasar, di mikrobus, dan di rumah tetangga. Empat buku ini saling melengkapi: <i>‘ala gambi yastha!</i> untuk 500 kata kerja beserta semua bentuknya, <i>da ismu eh yastha?</i> untuk 8.000+ kata dan ungkapan per tema, <i>zay keda yastha!</i> untuk 369 kaidah yang menjelaskan kenapa semuanya diucapkan begitu, dan yang terbaru, <i>yalla bina yastha!</i>, untuk 116 situasi nyata tempat semua itu akhirnya kamu ucapkan.</p>
-    <div id="contoh-gratis" style="margin:0 0 20px">
+    <div id="contoh-gratis" style="margin:0 0 20px;min-width:0;max-width:100%">
       <p style="margin:0 0 4px"><b>Coba dulu sebelum bayar</b></p>
       <p class="gallery-hint">Contoh halaman asli dari keempat buku. Geser ke samping, ketuk gambar untuk memperbesar.</p>
       <div class="gallery">
